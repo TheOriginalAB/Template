@@ -12,7 +12,7 @@ namespace DwarfWars.Server
     {
         public NetPeer Client { get; private set; }
 
-        public ServerPlayer(NetPeer client, int x, int y) : base(x, y)
+        public ServerPlayer(NetPeer client, int x, int y, float rotation) : base(x, y, rotation)
         {
             Client = client;
         }

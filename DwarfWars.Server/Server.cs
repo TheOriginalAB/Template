@@ -26,16 +26,7 @@ namespace DwarfWars.Server
             var config = new NetPeerConfiguration("DwarfWars") { Port = 14242 };
             server = new NetServer(config);
             server.Start();
-
-            if (server.Status == NetPeerStatus.Running)
-            {
-                Console.WriteLine("Server is running on port " + config.Port);
-                Console.WriteLine();
-            }
-            else
-            {
-                Console.WriteLine("Server not started...");
-            }
+            
             clients = new List<ServerPlayer>();
         }
 
@@ -58,6 +49,7 @@ namespace DwarfWars.Server
                                     var xmovement = direction == "L" ? -1 : direction == "R" ? 1 : 0;
                                     var ymovement = direction == "D" ? -1 : direction == "U" ? 1 : 0;
                                     command = new MovementCommand(GetServerPlayer(message), xmovement, ymovement);
+
                                     break;
                                 case CommandType.Connect:
                                     break;
@@ -65,11 +57,13 @@ namespace DwarfWars.Server
                                     break;
                                 case CommandType.Destroy:
                                     break;
+                                case CommandType.Response:
+                                    break;
                             }
 
                             commandQueue.Enqueue(command);
 
-                            new Thread(new ThreadStart(command.Run)).Start();
+                            new Thread(command.Run).Start();
                             
                             break;
                         }
@@ -78,7 +72,7 @@ namespace DwarfWars.Server
                     case NetIncomingMessageType.StatusChanged:
                         if (message.SenderConnection.Status == NetConnectionStatus.Connected)
                         {
-                            clients.Add( new ServerPlayer(message.SenderConnection.Peer, 100, 100));
+                            clients.Add( new ServerPlayer(message.SenderConnection.Peer, 100, 100, 0));
                         }
                         if (message.SenderConnection.Status == NetConnectionStatus.Disconnected)
                         {
@@ -86,20 +80,19 @@ namespace DwarfWars.Server
                         }
                         break;
                     default:
-                        Console.WriteLine("Unhandled message type: {message.MessageType}");
                         break;
                 }
                 server.Recycle(message);
             }
         }
 
-        public void SendWorldState()
+        public void SendWorldState(ICommand command)
         {
             NetOutgoingMessage message = server.CreateMessage();
             if(commandQueue.Count > 0)
             {
                 commandQueue.Dequeue();
-
+                
             }
         }
 

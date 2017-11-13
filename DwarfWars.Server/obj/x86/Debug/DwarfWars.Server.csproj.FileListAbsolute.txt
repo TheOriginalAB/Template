@@ -1,2 +1,0 @@
-D:\DwarfWars\DwarfWars.Server\obj\x86\Debug\DwarfWars.Server.csprojResolveAssemblyReference.cache
-D:\DwarfWars\DwarfWars.Server\obj\x86\Debug\DwarfWars.Server.csproj.CoreCompileInputs.cache

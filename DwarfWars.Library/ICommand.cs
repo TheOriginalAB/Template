@@ -6,11 +6,19 @@ using System.Threading.Tasks;
 
 namespace DwarfWars.Library
 {
-    public interface ICommand
+    public abstract class ICommand
     {
-        void Run();
-        CommandType GetCommandType();
+        public abstract void Run();
+        public CommandType CommandType;
+        public string ID;
         
+        protected string GenerateRandID()
+        {
+            string output = "";
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for (int i = 0; i < 8; i++) ID += chars[(new Random()).Next(0, chars.Length)];
+            return output;
+        }
     }
 
     public class MovementCommand : ICommand
@@ -24,17 +32,30 @@ namespace DwarfWars.Library
             Target = target;
             XMovement = xmovement;
             YMovement = ymovement;
+            CommandType = CommandType.Movement;
+            ID = GenerateRandID();
+            
+            
         }
-
-        public CommandType GetCommandType()
-        {
-            return CommandType.Movement;
-        }
-
-        public void Run()
+        
+        public override void Run()
         {
             Target.XPos += XMovement;
             Target.YPos += YMovement;
+        }
+    }
+
+    public class ResponseCommand : ICommand
+    {
+        public ResponseCommand(string id)
+        {
+            ID = id;
+            CommandType = CommandType.Response;
+        }
+
+        public override void Run()
+        {
+            
         }
     }
 }
