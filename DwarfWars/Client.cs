@@ -14,7 +14,6 @@ namespace DwarfWars
     {
         private NetClient client;
         private ClientPlayer player;
-        private List<SendingThread> threads;
         
         public List<ClientPlayer> allPlayers;
         public List<ICommand> recentCommands;
@@ -26,19 +25,18 @@ namespace DwarfWars
 
         public void StartClient()
         {
-            var config = new NetPeerConfiguration("DwarfWars")
+            var config = new NetPeerConfiguration("hej")
             {
                 AutoFlushSendQueue = false
             };
             client = new NetClient(config);
             client.Start();
 
-            string ip = "10.49.250.192";
+            string ip = "localhost";
             int port = 14242;
             client.Connect(ip, port);
 
             player = new ClientPlayer(0, 0, 0, true);
-            threads = new List<SendingThread>();
             allPlayers = new List<ClientPlayer>();
             allPlayers.Add(player);
             recentCommands = new List<ICommand>();
@@ -51,10 +49,7 @@ namespace DwarfWars
             var command = new MovementCommand(player, xmovement, ymovement, direction, ICommand.GenerateRandID());
             
             command.Run();
-
-            ThreadCloseToken token = new ThreadCloseToken();
-            SendingThread thread = new SendingThread(() => SendMessage(command, token), command.ID, token);
-            threads.Add(thread);
+            SendMessage(command);
         }
 
         public void ReadMessages()
@@ -116,20 +111,11 @@ namespace DwarfWars
                                         break;
                                     case CommandType.Destroy:
                                         break;
-                                    case CommandType.Response:
-                                        foreach (SendingThread st in threads)
-                                        {
-                                            st.HasResponded(commandId);
-                                        }
-                                        break;
                                 }
 
-                                if (command.CommandType != CommandType.Response && !recentCommands.Contains(command))
-                                {
-                                    command.Run();
-                                    SendResponse(command);
-                                    AddToRecent(command);
-                                }
+                                command.Run();
+                                AddToRecent(command);
+
 
                                 break;
                             }
@@ -146,23 +132,13 @@ namespace DwarfWars
             }
         }
 
-        public void SendMessage(ICommand command, ThreadCloseToken token)
+        public void SendMessage(ICommand command)
         {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            int lastRunInterval = -1;
-            while (token.IsRunning)
-            {
-                int currentSecond = stopwatch.Elapsed.Seconds;
-                if (lastRunInterval != currentSecond && currentSecond % 5 == 0)
-                {
-                    NetOutgoingMessage message = CreateMessage(command);
-                    lastRunInterval = currentSecond;
-                    client.SendMessage(message, NetDeliveryMethod.ReliableOrdered);
-                    client.FlushSendQueue();
-                }
-            }
-            
+            NetOutgoingMessage message = CreateMessage(command);
+            client.SendMessage(message, NetDeliveryMethod.ReliableOrdered);
+            client.FlushSendQueue();
+
+
         }
 
         private NetOutgoingMessage CreateMessage(ICommand command)
@@ -176,32 +152,14 @@ namespace DwarfWars
                     message.Write(MoveCommand.Target.ID);
                     message.Write(MoveCommand.MoveString);
                     break;
-                case CommandType.Connect:
-                    break;
                 case CommandType.Build:
                     break;
                 case CommandType.Destroy:
                     break;
-                case CommandType.Response:
-
-                    break;
             }
             return message;
         }
-
-        public void SendResponse(ICommand command)
-        {
-            NetOutgoingMessage message = client.CreateMessage();
-            message.Write((byte)CommandType.Response);
-            message.Write(command.ID);
-            message.Write(player.ID);
-
-            client.SendMessage(message, NetDeliveryMethod.ReliableOrdered);
-            client.FlushSendQueue();
-
-        }
-
-
+        
         private void AddToRecent(ICommand command)
         {
             while (recentCommands.Count >= 10)

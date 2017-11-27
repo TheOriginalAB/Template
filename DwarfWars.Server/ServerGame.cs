@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Threading;
 using DwarfWars.Library;
 using Lidgren.Network;
+using System;
 
 namespace DwarfWars.Server
 {
@@ -15,17 +16,15 @@ namespace DwarfWars.Server
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Server server;
-        Thread readingThread;
+        SpriteFont font;
 
-        public ServerGame()
+        public ServerGame(Server server)
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            server = new Server(this);
-            server.StartServer();
-            readingThread = new Thread(server.ReadMessages);
-            readingThread.Start();
+            this.server = server;
             IsMouseVisible = true;
+            
         }
 
         /// <summary>
@@ -49,6 +48,7 @@ namespace DwarfWars.Server
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            font = Content.Load<SpriteFont>("File");
             // TODO: use this.Content to load your game content here
         }
 
@@ -91,8 +91,10 @@ namespace DwarfWars.Server
             {
                 spriteBatch.Draw(temp, new Rectangle(p.XPos, p.YPos, 100, 100), Color.Red);
             }
+            spriteBatch.DrawString(font, server._clients.Count.ToString(), new Vector2(0, 0), Color.Black);
             base.Draw(gameTime);
             spriteBatch.End();
         }
+        
     }
 }

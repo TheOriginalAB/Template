@@ -4,20 +4,16 @@ using System.Text;
 
 namespace DwarfWars.Library
 {
-    public enum CommandType : byte 
+    public enum CommandType 
     {
-        Welcome, Connect, Response, Movement, Destroy, Build
+        Welcome, Connect, Movement, Destroy, Build
     }
 
     public class Player
     {
-        private readonly object Lock = new object();
-
-        private int _XPos;
-        public int XPos { get { lock (Lock) { return _XPos; } } set { lock (Lock) { _XPos = value; } } }
-
-        private int _YPos;
-        public int YPos { get { lock (Lock) { return _YPos; } } set { lock (Lock) { _YPos = value; } } }
+        public int XPos;
+        
+        public int YPos;
 
         public float Rotation;
         public byte ID;
@@ -46,19 +42,6 @@ namespace DwarfWars.Library
                 }
             }
             return output;
-        }
-    }
-
-    public class ThreadCloseToken
-    {
-        private readonly object Lock = new object();
-
-        private bool _IsRunning;
-        public bool IsRunning { get { lock (Lock) { return _IsRunning; } } set { lock (Lock) { _IsRunning = value; } } }
-
-        public ThreadCloseToken()
-        {
-            IsRunning = true;
         }
     }
 }

@@ -47,22 +47,7 @@ namespace DwarfWars.Library
             Target.YPos += YMovement;
         }
     }
-
-    public class ResponseCommand : ICommand
-    {
-        public byte RecieverID;
-
-        public ResponseCommand(byte playerid, string commandid) : base(CommandType.Response, commandid)
-        {
-            RecieverID = playerid;
-        }
-
-        public override void Run()
-        {
-            
-        }
-    }
-
+    
     public class ConnectCommand<T> : ICommand where T : Player
     {
         List<T> Players;

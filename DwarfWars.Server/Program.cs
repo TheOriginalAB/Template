@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Threading;
 namespace DwarfWars.Server
 {
 #if WINDOWS || LINUX
@@ -14,8 +14,13 @@ namespace DwarfWars.Server
         [STAThread]
         static void Main()
         {
-            using (var game = new ServerGame())
+            Server server = new Server();
+            server.StartServer();
+            Thread thread = new Thread(server.ReadMessages);
+            thread.Start();
+            using (var game = new ServerGame(server))
                 game.Run();
+            thread.Abort();
         }
     }
 #endif
