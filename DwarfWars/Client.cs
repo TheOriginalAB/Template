@@ -16,7 +16,6 @@ namespace DwarfWars
         private ClientPlayer player;
         
         public List<ClientPlayer> allPlayers;
-        public List<ICommand> recentCommands;
 
         public Client()
         {
@@ -39,7 +38,6 @@ namespace DwarfWars
             player = new ClientPlayer(0, 0, 0, true);
             allPlayers = new List<ClientPlayer>();
             allPlayers.Add(player);
-            recentCommands = new List<ICommand>();
         }
 
         public void Movement(string direction)
@@ -114,7 +112,6 @@ namespace DwarfWars
                                 }
 
                                 command.Run();
-                                AddToRecent(command);
 
 
                                 break;
@@ -160,15 +157,6 @@ namespace DwarfWars
             return message;
         }
         
-        private void AddToRecent(ICommand command)
-        {
-            while (recentCommands.Count >= 10)
-            {
-                recentCommands.Remove(recentCommands[0]);
-            }
-            recentCommands.Add(command);
-        }
-
         public void Disconnect()
         {
             client.Disconnect("Bye");

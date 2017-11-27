@@ -6,7 +6,7 @@ namespace DwarfWars.Library
 {
     public enum CommandType 
     {
-        Welcome, Connect, Movement, Destroy, Build
+        Movement, Connect, Welcome, Destroy, Build
     }
 
     public class Player
