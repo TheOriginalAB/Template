@@ -164,7 +164,7 @@ namespace DwarfWars.Server
                     message.Write(WelcomeCommand.PlayerID);
                     message.Write(WelcomeCommand.Pos[0]);
                     message.Write(WelcomeCommand.Pos[1]);
-                    var size = WelcomeCommand.OtherPlayers.Count();
+                    var size = (byte)WelcomeCommand.OtherPlayers.Count();
                     message.Write(size);
                     for(int i = 0; i < size; i++)
                     {

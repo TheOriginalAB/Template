@@ -102,6 +102,7 @@ namespace DwarfWars
                                             var tempRot = message.ReadFloat();
                                             otherPlayers[i] = new ClientPlayer(tempX, tempY, tempRot, false);
                                             otherPlayers[i].SetID(tempID);
+                                            otherPlayers[i].SetPos(tempX, tempY);
                                         }
                                         command = new WelcomeCommand<ClientPlayer>(player, otherPlayers, allPlayers, playerID, playerX, playerY, commandId);
                                         
