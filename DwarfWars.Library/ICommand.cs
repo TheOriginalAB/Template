@@ -14,7 +14,8 @@ namespace DwarfWars.Library
         
         public ICommand(CommandType commandType, string id)
         {
-
+            CommandType = commandType;
+            ID = id;
         }
 
         public static string GenerateRandID()
@@ -55,7 +56,6 @@ namespace DwarfWars.Library
 
         public ConnectCommand(List<T> players, T newPlayer, string commandid) : base(CommandType.Connect, commandid)
         {
-            CommandType = CommandType.Connect;
             Players = players;
             NewPlayer = newPlayer;
         }
@@ -69,21 +69,24 @@ namespace DwarfWars.Library
     public class WelcomeCommand<T> : ICommand where T : Player
     {
         public byte PlayerID;
+        public int[] Pos;
         public T Player;
         public T[] OtherPlayers;
         public List<T> ClientList;
 
-        public WelcomeCommand(T player, T[] otherplayers, List<T> clientlist, byte playerid, string commandid) : base(CommandType.Welcome, commandid)
+        public WelcomeCommand(T player, T[] otherplayers, List<T> clientlist, byte playerid, int playerX, int playerY, string commandid) : base(CommandType.Welcome, commandid)
         {
             PlayerID = playerid;
             Player = player;
             OtherPlayers = otherplayers;
             ClientList = clientlist;
+            Pos = new int[] { playerX, playerY };
         }
 
         public override void Run()
         {
             Player.SetID(PlayerID);
+            Player.SetPos(Pos[0], Pos[1]);
             ClientList.AddRange(OtherPlayers);
         }
     }

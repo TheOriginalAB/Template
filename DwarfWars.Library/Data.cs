@@ -4,9 +4,9 @@ using System.Text;
 
 namespace DwarfWars.Library
 {
-    public enum CommandType 
+    public enum CommandType : byte
     {
-        Movement, Connect, Welcome, Destroy, Build
+        Welcome, Movement, Connect, Destroy, Build
     }
 
     public class Player
@@ -28,6 +28,12 @@ namespace DwarfWars.Library
         public void SetID(byte id)
         {
             ID = id;
+        }
+
+        public void SetPos(int X, int Y)
+        {
+            XPos = X;
+            YPos = Y;
         }
 
         public static Player GetPlayer(Player[] players, byte ID)

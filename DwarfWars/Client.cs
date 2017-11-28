@@ -13,7 +13,7 @@ namespace DwarfWars
     class Client
     {
         private NetClient client;
-        private ClientPlayer player;
+        public ClientPlayer player;
         
         public List<ClientPlayer> allPlayers;
 
@@ -35,15 +35,15 @@ namespace DwarfWars
             int port = 14242;
             client.Connect(ip, port);
 
-            player = new ClientPlayer(0, 0, 0, true);
+            player = new ClientPlayer(100, 100, 0, true);
             allPlayers = new List<ClientPlayer>();
             allPlayers.Add(player);
         }
 
         public void Movement(string direction)
         {
-            var xmovement = direction == "L" ? -1 : direction == "R" ? 1 : 0;
-            var ymovement = direction == "D" ? -1 : direction == "U" ? 1 : 0;
+            var xmovement = direction.Contains("L") ? -1 : direction.Contains("R") ? 1 : 0;
+            var ymovement = direction.Contains("U") ? -1 : direction.Contains("D") ? 1 : 0;
             var command = new MovementCommand(player, xmovement, ymovement, direction, ICommand.GenerateRandID());
             
             command.Run();
@@ -77,15 +77,17 @@ namespace DwarfWars
                                     case CommandType.Movement:
                                         playerID = message.ReadByte();
                                         string direction = message.ReadString();
-                                        var xmovement = direction == "L" ? -1 : direction == "R" ? 1 : 0;
-                                        var ymovement = direction == "D" ? -1 : direction == "U" ? 1 : 0;
-                                        
+                                        var xmovement = direction.Contains("L") ? -1 : direction.Contains("R") ? 1 : 0;
+                                        var ymovement = direction.Contains("U") ? -1 : direction.Contains("D") ? 1 : 0;
+
                                         command = new MovementCommand(Player.GetPlayer(cl, playerID), xmovement, ymovement, direction, commandId);
                                         
                                         break;
 
                                     case CommandType.Welcome:
                                         playerID = message.ReadByte();
+                                        var playerX = message.ReadInt32();
+                                        var playerY = message.ReadInt32();
                                         var size = message.ReadByte();
                                         ClientPlayer[] otherPlayers = new ClientPlayer[size];
                                         for(int i = 0; i < size; i++)
@@ -97,11 +99,13 @@ namespace DwarfWars
                                             otherPlayers[i] = new ClientPlayer(tempX, tempY, tempRot, false);
                                             otherPlayers[i].SetID(tempID);
                                         }
-                                        command = new WelcomeCommand<ClientPlayer>(player, otherPlayers, allPlayers, playerID, commandId);
+                                        command = new WelcomeCommand<ClientPlayer>(player, otherPlayers, allPlayers, playerID, playerX, playerY, commandId);
                                         
                                         break;
                                     case CommandType.Connect:
-                                        ClientPlayer temp = new ClientPlayer(0, 0, 0, false);
+                                        ClientPlayer temp = new ClientPlayer(100, 100, 0, false);
+                                        var newPlayerID = message.ReadByte();
+                                        temp.SetID(newPlayerID);
                                         command = new ConnectCommand<ClientPlayer>(allPlayers, temp, commandId);
 
                                         break;
@@ -142,6 +146,7 @@ namespace DwarfWars
         {
             NetOutgoingMessage message = client.CreateMessage();
             message.Write((byte)command.CommandType);
+            message.Write(command.ID);
             switch (command.CommandType)
             {
                 case CommandType.Movement:

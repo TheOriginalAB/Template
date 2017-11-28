@@ -80,32 +80,28 @@ namespace DwarfWars
                 Exit();
             current = Keyboard.GetState();
 
-            var seconds = gameTime.TotalGameTime.Seconds;
-            if(seconds > lastIteration)
+            var movestring = String.Empty;
+            if (current.IsKeyDown(Keys.Up))
             {
-                if (current.IsKeyDown(Keys.Up))
-                {
-                    client.Movement("U");
-                    lastIteration = seconds;
-                }
-                else if (current.IsKeyDown(Keys.Down))
-                {
-                    client.Movement("D");
-                    lastIteration = seconds;
+                movestring += "U";
+            }
+            else if (current.IsKeyDown(Keys.Down))
+            {
+                movestring += "D";
 
-                }
-                else if (current.IsKeyDown(Keys.Left))
-                {
-                    client.Movement("L");
-                    lastIteration = seconds;
+            }
+            if (current.IsKeyDown(Keys.Left))
+            {
+                movestring += "L";
 
-                }
-                else if (current.IsKeyDown(Keys.Right))
-                {
-                    client.Movement("R");
-                    lastIteration = seconds;
-
-                }
+            }
+            else if (current.IsKeyDown(Keys.Right))
+            {
+                movestring += "R";
+            }
+            if (movestring != String.Empty)
+            {
+                client.Movement(movestring);
             }
             // TODO: Add your update logic here
 
@@ -121,12 +117,12 @@ namespace DwarfWars
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             Texture2D temp = new Texture2D(GraphicsDevice, 1, 1);
-
+            temp.SetData(new Color[] { Color.White });
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             foreach (ClientPlayer p in client.allPlayers)
             {
-                Color color;
+                Color color = Color.Blue;
                 if (p.IsClient)
                 {
                     color = Color.Green;
@@ -135,7 +131,7 @@ namespace DwarfWars
                 {
                     color = Color.Red;
                 }
-                spriteBatch.Draw(temp, new Rectangle(p.XPos, p.YPos, 100, 100), color);
+                spriteBatch.Draw(temp, new Rectangle(p.XPos, p.YPos, 50, 50), color);
             }
             spriteBatch.DrawString(font, client.allPlayers.Count.ToString(), new Vector2(0,0), Color.Black);
             base.Draw(gameTime);

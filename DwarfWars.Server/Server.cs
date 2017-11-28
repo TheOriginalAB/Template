@@ -17,11 +17,10 @@ namespace DwarfWars.Server
         private NetServer server;
         private List<ServerPlayer> Clients;
         public List<ServerPlayer> _clients { get { lock (Lock) { return Clients; } } set { lock (Lock) { Clients = value; } } }
-        public List<ICommand> recentCommands;
 
         public Server()
         {
-            recentCommands = new List<ICommand>();
+
         }
 
         public void StartServer()
@@ -60,8 +59,8 @@ namespace DwarfWars.Server
                                 {
                                     case CommandType.Movement:
                                         string direction = message.ReadString();
-                                        var xmovement = direction == "L" ? -1 : direction == "R" ? 1 : 0;
-                                        var ymovement = direction == "D" ? -1 : direction == "U" ? 1 : 0;
+                                        var xmovement = direction.Contains("L") ? -1 : direction.Contains("R") ? 1 : 0;
+                                        var ymovement = direction.Contains("U") ? -1 : direction.Contains("D") ? 1 : 0;
                                         command = new MovementCommand(GetServerPlayer(message), xmovement, ymovement, direction, commandId);
 
                                         break;
@@ -73,7 +72,6 @@ namespace DwarfWars.Server
 
                                 command.Run();
                                 SendCommandToAll(command, GetServerPlayer(message));
-                                AddToRecent(command);
 
 
                                 break;
@@ -87,7 +85,7 @@ namespace DwarfWars.Server
                                 newPlayer.SetID((byte)_clients.Count);
 
                                 var command = new ConnectCommand<ServerPlayer>(_clients, newPlayer, ICommand.GenerateRandID());
-                                var welcomeCommand = new WelcomeCommand<ServerPlayer>(newPlayer, _clients.ToArray(), null, newPlayer.ID, ICommand.GenerateRandID());
+                                var welcomeCommand = new WelcomeCommand<ServerPlayer>(newPlayer, _clients.ToArray(), null, newPlayer.ID, 100, 100, ICommand.GenerateRandID());
 
                                 var welcomeMessage = CreateMessage(welcomeCommand);
                                 
@@ -95,7 +93,6 @@ namespace DwarfWars.Server
 
                                 SendCommandToAll(command, GetServerPlayer(message));
                                 command.Run();
-                                AddToRecent(command);
                             }
                             if (message.SenderConnection.Status == NetConnectionStatus.Disconnected)
                             {
@@ -140,6 +137,7 @@ namespace DwarfWars.Server
         private NetOutgoingMessage CreateMessage(ICommand command)
         {
             NetOutgoingMessage message = server.CreateMessage();
+            
             message.Write((byte)command.CommandType);
             message.Write(command.ID);
             switch (command.CommandType)
@@ -162,6 +160,8 @@ namespace DwarfWars.Server
                 case CommandType.Welcome:
                     var WelcomeCommand = (WelcomeCommand<ServerPlayer>)command;
                     message.Write(WelcomeCommand.PlayerID);
+                    message.Write(WelcomeCommand.Pos[0]);
+                    message.Write(WelcomeCommand.Pos[1]);
                     var size = WelcomeCommand.OtherPlayers.Count();
                     message.Write(size);
                     for(int i = 0; i < size; i++)
@@ -180,21 +180,13 @@ namespace DwarfWars.Server
         {
             foreach (ServerPlayer p in _clients)
             {
-                if (p.Client.Equals(msg.SenderConnection.Peer))
+                if (p.Client.RemoteUniqueIdentifier.Equals(msg.SenderConnection.RemoteUniqueIdentifier))
                 {
                     return p;
                 }
             }
             return null;
         }
-
-        private void AddToRecent(ICommand command)
-        {
-            while (recentCommands.Count >= 10)
-            {
-                recentCommands.Remove(recentCommands[0]);
-            }
-            recentCommands.Add(command);
-        }
+        
     }
 }

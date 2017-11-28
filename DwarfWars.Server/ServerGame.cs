@@ -84,12 +84,13 @@ namespace DwarfWars.Server
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             Texture2D temp = new Texture2D(GraphicsDevice, 1, 1);
+            temp.SetData(new Color[] { Color.White });
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            foreach(Player p in server._clients)
+            foreach(ServerPlayer p in server._clients)
             {
-                spriteBatch.Draw(temp, new Rectangle(p.XPos, p.YPos, 100, 100), Color.Red);
+                spriteBatch.Draw(temp, new Rectangle(p.XPos, p.YPos, 50, 50), Color.Red);
             }
             spriteBatch.DrawString(font, server._clients.Count.ToString(), new Vector2(0, 0), Color.Black);
             base.Draw(gameTime);
