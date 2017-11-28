@@ -17,10 +17,11 @@ namespace DwarfWars.Server
         private NetServer server;
         private List<ServerPlayer> Clients;
         public List<ServerPlayer> _clients { get { lock (Lock) { return Clients; } } set { lock (Lock) { Clients = value; } } }
+        private byte currentID;
 
         public Server()
         {
-
+            currentID = 0;
         }
 
         public void StartServer()
@@ -71,7 +72,7 @@ namespace DwarfWars.Server
                                 }
 
                                 command.Run();
-                                SendCommandToAll(command, GetServerPlayer(message));
+                                SendCommandToAll(command, playerID);
 
 
                                 break;
@@ -82,7 +83,8 @@ namespace DwarfWars.Server
                             if (message.SenderConnection.Status == NetConnectionStatus.Connected)
                             {
                                 var newPlayer = new ServerPlayer(message.SenderConnection, 100, 100, 0);
-                                newPlayer.SetID((byte)_clients.Count);
+                                newPlayer.SetID(currentID);
+                                currentID++;
 
                                 var command = new ConnectCommand<ServerPlayer>(_clients, newPlayer, ICommand.GenerateRandID());
                                 var welcomeCommand = new WelcomeCommand<ServerPlayer>(newPlayer, _clients.ToArray(), null, newPlayer.ID, 100, 100, ICommand.GenerateRandID());
@@ -91,7 +93,7 @@ namespace DwarfWars.Server
                                 
                                 server.SendMessage(welcomeMessage, message.SenderConnection, NetDeliveryMethod.ReliableOrdered);
 
-                                SendCommandToAll(command, GetServerPlayer(message));
+                                SendCommandToAll(command, newPlayer.ID);
                                 command.Run();
                             }
                             if (message.SenderConnection.Status == NetConnectionStatus.Disconnected)
@@ -107,14 +109,14 @@ namespace DwarfWars.Server
             }
         }
 
-        public void SendCommandToAll(ICommand command, ServerPlayer sender)
+        public void SendCommandToAll(ICommand command, byte playerID)
         {
             NetOutgoingMessage message = CreateMessage(command);
 
             List<ServerPlayer> temp = new List<ServerPlayer>();
             foreach (ServerPlayer player in _clients)
             {
-                if (player != sender)
+                if (player.ID != playerID)
                 {
                     temp.Add(player);
                 }

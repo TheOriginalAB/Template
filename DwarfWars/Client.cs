@@ -79,7 +79,11 @@ namespace DwarfWars
                                         string direction = message.ReadString();
                                         var xmovement = direction.Contains("L") ? -1 : direction.Contains("R") ? 1 : 0;
                                         var ymovement = direction.Contains("U") ? -1 : direction.Contains("D") ? 1 : 0;
-
+                                        if (playerID == player.ID)
+                                        {
+                                            xmovement = 0;
+                                            ymovement = 0;
+                                        }
                                         command = new MovementCommand(Player.GetPlayer(cl, playerID), xmovement, ymovement, direction, commandId);
                                         
                                         break;
