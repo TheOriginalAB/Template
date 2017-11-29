@@ -161,7 +161,7 @@ namespace DwarfWars.Server
                     break;
                 case CommandType.Disconnect:
                     var DisconnCommand = (DisconnectCommand<ServerPlayer>)command;
-                    message.Write(DisconnCommand.ID);
+                    message.Write(DisconnCommand.LeavingPlayer.ID);
                     break;
                 case CommandType.Build:
                     break;
