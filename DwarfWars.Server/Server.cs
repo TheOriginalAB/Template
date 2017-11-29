@@ -26,7 +26,7 @@ namespace DwarfWars.Server
 
         public void StartServer()
         {
-            var config = new NetPeerConfiguration("hej") { Port = 14242, LocalAddress = new IPAddress(new byte[] { 127, 0, 0, 1 }) };
+            var config = new NetPeerConfiguration("hej") { Port = 14242 };
             server = new NetServer(config);
             server.Start();
 
