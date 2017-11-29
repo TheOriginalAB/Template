@@ -112,7 +112,11 @@ namespace DwarfWars
                                         var newPlayerID = message.ReadByte();
                                         temp.SetID(newPlayerID);
                                         command = new ConnectCommand<ClientPlayer>(allPlayers, temp, commandId);
+                                        break;
 
+                                    case CommandType.Disconnect:
+                                        var leavingPlayerID = message.ReadByte();
+                                        command = new DisconnectCommand<ClientPlayer>(allPlayers, (ClientPlayer)Player.GetPlayer(cl, leavingPlayerID), commandId);
                                         break;
                                     case CommandType.Build:
                                         break;

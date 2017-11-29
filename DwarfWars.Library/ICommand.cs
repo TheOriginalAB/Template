@@ -70,6 +70,23 @@ namespace DwarfWars.Library
         }
     }
 
+    public class DisconnectCommand<T> : ICommand where T : Player
+    {
+        List<T> Players;
+        public T LeavingPlayer;
+
+        public DisconnectCommand(List<T> players, T leavingPlayer, string commandid) : base(CommandType.Disconnect, commandid)
+        {
+            Players = players;
+            LeavingPlayer = leavingPlayer;
+        }
+
+        public override void Run()
+        {
+            Players.Remove(LeavingPlayer);
+        }
+    }
+
     public class WelcomeCommand<T> : ICommand where T : Player
     {
         public byte PlayerID;

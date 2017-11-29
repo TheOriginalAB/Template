@@ -98,7 +98,11 @@ namespace DwarfWars.Server
                             }
                             if (message.SenderConnection.Status == NetConnectionStatus.Disconnected)
                             {
-                                _clients.Remove(GetServerPlayer(message));
+                                var leavingPlayer = GetServerPlayer(message);
+                                var command = new DisconnectCommand<ServerPlayer>(_clients, leavingPlayer, ICommand.GenerateRandID());
+
+                                SendCommandToAll(command, leavingPlayer.ID);
+                                command.Run();
                             }
                             break;
                         default:
@@ -154,6 +158,10 @@ namespace DwarfWars.Server
                     message.Write(ConnCommand.NewPlayer.ID);
                     message.Write(ConnCommand.NewPlayer.XPos);
                     message.Write(ConnCommand.NewPlayer.YPos);
+                    break;
+                case CommandType.Disconnect:
+                    var DisconnCommand = (DisconnectCommand<ServerPlayer>)command;
+                    message.Write(DisconnCommand.ID);
                     break;
                 case CommandType.Build:
                     break;
