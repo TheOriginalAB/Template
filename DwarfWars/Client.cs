@@ -31,7 +31,7 @@ namespace DwarfWars
             client = new NetClient(config);
             client.Start();
 
-            string ip = "localhost";
+            string ip = "10.49.250.192";
             int port = 14242;
             client.Connect(ip, port);
 

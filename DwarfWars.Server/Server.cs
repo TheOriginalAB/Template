@@ -130,7 +130,7 @@ namespace DwarfWars.Server
             {
                 NetOutgoingMessage message = CreateMessage(command);
 
-                server.SendMessage(message, _clients[0].Client, NetDeliveryMethod.ReliableOrdered);
+                server.SendMessage(message, player.Client, NetDeliveryMethod.ReliableOrdered);
                 server.FlushSendQueue();
 
             }

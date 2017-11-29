@@ -21,8 +21,12 @@ namespace DwarfWars.Library
         public static string GenerateRandID()
         {
             string output = "";
+            Random r = new Random();
             var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            for (int i = 0; i < 8; i++) output += chars[(new Random()).Next(0, chars.Length)];
+            for (int i = 0; i < 8; i++)
+            {
+                output += chars[r.Next(0, chars.Length)];
+            }
             return output;
         }
     }

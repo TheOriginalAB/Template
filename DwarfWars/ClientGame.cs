@@ -132,6 +132,7 @@ namespace DwarfWars
                     color = Color.Red;
                 }
                 spriteBatch.Draw(temp, new Rectangle(p.XPos, p.YPos, 50, 50), color);
+                spriteBatch.DrawString(font, p.ID.ToString(), new Vector2(p.XPos, p.YPos), Color.Black);
             }
             spriteBatch.DrawString(font, client.allPlayers.Count.ToString(), new Vector2(0,0), Color.Black);
             base.Draw(gameTime);
