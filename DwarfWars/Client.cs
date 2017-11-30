@@ -77,8 +77,8 @@ namespace DwarfWars
                                     case CommandType.Movement:
                                         playerID = message.ReadByte();
                                         string direction = message.ReadString();
-                                        var xmovement = direction.Contains("L") ? -1 : direction.Contains("R") ? 1 : 0;
-                                        var ymovement = direction.Contains("U") ? -1 : direction.Contains("D") ? 1 : 0;
+                                        var xmovement = direction.Contains("L") ? -5 : direction.Contains("R") ? 5 : 0;
+                                        var ymovement = direction.Contains("U") ? -5 : direction.Contains("D") ? 5 : 0;
                                         if (playerID == player.ID)
                                         {
                                             xmovement = 0;
