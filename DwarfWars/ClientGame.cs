@@ -18,9 +18,7 @@ namespace DwarfWars
         Client client;
         Thread readingThread;
         KeyboardState current;
-        int lastIteration;
         SpriteFont font;
-
 
         public ClientGame()
         {
@@ -30,9 +28,7 @@ namespace DwarfWars
             readingThread = new Thread(client.ReadMessages);
             readingThread.Start();
             current = Keyboard.GetState();
-            lastIteration = -1;
             IsMouseVisible = true;
-            
         }
 
         /// <summary>
@@ -104,7 +100,6 @@ namespace DwarfWars
                 client.Movement(movestring);
             }
             // TODO: Add your update logic here
-
             base.Update(gameTime);
         }
 
@@ -135,6 +130,7 @@ namespace DwarfWars
                 spriteBatch.DrawString(font, p.ID.ToString(), new Vector2(p.XPos, p.YPos), Color.Black);
             }
             spriteBatch.DrawString(font, client.allPlayers.Count.ToString(), new Vector2(0,0), Color.Black);
+            spriteBatch.DrawString(font, "Ping: " + ((int)(client.client.Connections[0].AverageRoundtripTime * 1000)).ToString(), new Vector2(100, 0), Color.Black);
             base.Draw(gameTime);
             spriteBatch.End();
         }

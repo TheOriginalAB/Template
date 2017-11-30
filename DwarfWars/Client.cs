@@ -12,7 +12,7 @@ namespace DwarfWars
 {
     class Client
     {
-        private NetClient client;
+        public NetClient client;
         public ClientPlayer player;
         
         public List<ClientPlayer> allPlayers;
@@ -42,8 +42,8 @@ namespace DwarfWars
 
         public void Movement(string direction)
         {
-            var xmovement = direction.Contains("L") ? -1 : direction.Contains("R") ? 1 : 0;
-            var ymovement = direction.Contains("U") ? -1 : direction.Contains("D") ? 1 : 0;
+            var xmovement = direction.Contains("L") ? -5 : direction.Contains("R") ? 5 : 0;
+            var ymovement = direction.Contains("U") ? -5 : direction.Contains("D") ? 5 : 0;
             var command = new MovementCommand(player, xmovement, ymovement, direction, ICommand.GenerateRandID());
             
             command.Run();
