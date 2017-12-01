@@ -4,16 +4,23 @@ using System.Text;
 
 namespace DwarfWars.Library
 {
-    public enum CommandType : byte
+    public enum CommandType : sbyte
     {
-        Welcome, Connect, Disconnect, Movement, Destroy, Build
+        Welcome = -1, Connect = 1,
+        Goodbye = -2, Disconnect = 2,
+
+        Movement = -3, Location = 3,
+        Interact = -4
     }
 
     public class Player
     {
-        public int XPos;
+        private readonly object Lock = new object();
+        private int _XPos;
+        public int XPos { get { lock (Lock) { return _XPos; } } set { lock (Lock) { _XPos = value; } } }
         
-        public int YPos;
+        private int _YPos;
+        public int YPos { get { lock (Lock) { return _YPos; } } set { lock (Lock) { _YPos = value; } } }
 
         public float Rotation;
         public byte ID;

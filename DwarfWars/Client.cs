@@ -45,8 +45,9 @@ namespace DwarfWars
             var xmovement = direction.Contains("L") ? -5 : direction.Contains("R") ? 5 : 0;
             var ymovement = direction.Contains("U") ? -5 : direction.Contains("D") ? 5 : 0;
             var command = new MovementCommand(player, xmovement, ymovement, direction, ICommand.GenerateRandID());
-            
-            command.Run();
+
+            Thread thread = new Thread(command.Run);
+            thread.Start();
             SendMessage(command);
         }
 
@@ -118,9 +119,7 @@ namespace DwarfWars
                                         var leavingPlayerID = message.ReadByte();
                                         command = new DisconnectCommand<ClientPlayer>(allPlayers, (ClientPlayer)Player.GetPlayer(cl, leavingPlayerID), commandId);
                                         break;
-                                    case CommandType.Build:
-                                        break;
-                                    case CommandType.Destroy:
+                                    case CommandType.Interact:
                                         break;
                                 }
 
@@ -163,9 +162,7 @@ namespace DwarfWars
                     message.Write(MoveCommand.Target.ID);
                     message.Write(MoveCommand.MoveString);
                     break;
-                case CommandType.Build:
-                    break;
-                case CommandType.Destroy:
+                case CommandType.Interact:
                     break;
             }
             return message;

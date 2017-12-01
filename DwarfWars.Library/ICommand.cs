@@ -43,16 +43,30 @@ namespace DwarfWars.Library
             XMovement = xmovement;
             YMovement = ymovement;
             MoveString = moveChar;
-            
+
         }
-        
+
         public override void Run()
         {
             Target.XPos += XMovement;
             Target.YPos += YMovement;
         }
     }
-    
+
+    public class LocationCommand : ICommand
+    {
+        Player target;
+        public LocationCommand(Player target, int xpos, int ypos, string commandid) : base(CommandType.Location, commandid)
+        {
+            this.target = target;
+        }
+
+        public override void Run()
+        {
+            
+        }
+    }
+
     public class ConnectCommand<T> : ICommand where T : Player
     {
         List<T> Players;

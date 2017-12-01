@@ -65,9 +65,7 @@ namespace DwarfWars.Server
                                         command = new MovementCommand(GetServerPlayer(message), xmovement, ymovement, direction, commandId);
 
                                         break;
-                                    case CommandType.Build:
-                                        break;
-                                    case CommandType.Destroy:
+                                    case CommandType.Interact:
                                         break;
                                 }
 
@@ -163,9 +161,7 @@ namespace DwarfWars.Server
                     var DisconnCommand = (DisconnectCommand<ServerPlayer>)command;
                     message.Write(DisconnCommand.LeavingPlayer.ID);
                     break;
-                case CommandType.Build:
-                    break;
-                case CommandType.Destroy:
+                case CommandType.Interact:
                     break;
                 case CommandType.Welcome:
                     var WelcomeCommand = (WelcomeCommand<ServerPlayer>)command;
