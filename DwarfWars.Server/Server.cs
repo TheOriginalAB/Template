@@ -60,16 +60,17 @@ namespace DwarfWars.Server
                                 {
                                     case CommandType.Movement:
                                         string direction = message.ReadString();
+                                        var player = GetServerPlayer(message);
                                         var xmovement = direction.Contains("L") ? -5 : direction.Contains("R") ? 5 : 0;
                                         var ymovement = direction.Contains("U") ? -5 : direction.Contains("D") ? 5 : 0;
-                                        command = new MovementCommand(GetServerPlayer(message), xmovement, ymovement, direction, commandId);
-
+                                        command = new LocationCommand(player, player.XPos + xmovement, player.YPos + ymovement, commandId);
                                         break;
-                                    case CommandType.Interact:
+                                    case CommandType.Placement:
                                         break;
                                 }
 
-                                command.Run();
+                                Thread thread = new Thread(command.Run);
+                                thread.Start();
                                 SendCommandToAll(command, playerID);
 
 
@@ -146,10 +147,11 @@ namespace DwarfWars.Server
             message.Write(command.ID);
             switch (command.CommandType)
             {
-                case CommandType.Movement:
-                    var MoveCommand = (MovementCommand)command;
-                    message.Write(MoveCommand.Target.ID);
-                    message.Write(MoveCommand.MoveString);
+                case CommandType.Location:
+                    var LocationCommand = (LocationCommand)command;
+                    message.Write(LocationCommand.Target.ID);
+                    message.Write(LocationCommand.XPos);
+                    message.Write(LocationCommand.YPos);
                     break;
                 case CommandType.Connect:
                     var ConnCommand = (ConnectCommand<ServerPlayer>)command;
@@ -161,7 +163,7 @@ namespace DwarfWars.Server
                     var DisconnCommand = (DisconnectCommand<ServerPlayer>)command;
                     message.Write(DisconnCommand.LeavingPlayer.ID);
                     break;
-                case CommandType.Interact:
+                case CommandType.Placement:
                     break;
                 case CommandType.Welcome:
                     var WelcomeCommand = (WelcomeCommand<ServerPlayer>)command;

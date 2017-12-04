@@ -75,20 +75,6 @@ namespace DwarfWars
                                 }
                                 switch (data)
                                 {
-                                    case CommandType.Movement:
-                                        playerID = message.ReadByte();
-                                        string direction = message.ReadString();
-                                        var xmovement = direction.Contains("L") ? -5 : direction.Contains("R") ? 5 : 0;
-                                        var ymovement = direction.Contains("U") ? -5 : direction.Contains("D") ? 5 : 0;
-                                        if (playerID == player.ID)
-                                        {
-                                            xmovement = 0;
-                                            ymovement = 0;
-                                        }
-                                        command = new MovementCommand(Player.GetPlayer(cl, playerID), xmovement, ymovement, direction, commandId);
-                                        
-                                        break;
-
                                     case CommandType.Welcome:
                                         playerID = message.ReadByte();
                                         var playerX = message.ReadInt32();
@@ -119,11 +105,18 @@ namespace DwarfWars
                                         var leavingPlayerID = message.ReadByte();
                                         command = new DisconnectCommand<ClientPlayer>(allPlayers, (ClientPlayer)Player.GetPlayer(cl, leavingPlayerID), commandId);
                                         break;
-                                    case CommandType.Interact:
+                                    case CommandType.Placement:
+                                        break;
+                                    case CommandType.Location:
+                                        playerID = message.ReadByte();
+                                        var xpos = message.ReadInt32();
+                                        var ypos = message.ReadInt32();
+                                        var movingplayer = Player.GetPlayer(cl, playerID);
+                                        command = new LocationCommand(player, xpos, ypos, commandId);
                                         break;
                                 }
-
-                                command.Run();
+                                Thread thread = new Thread(command.Run);
+                                thread.Start();
 
 
                                 break;
@@ -146,8 +139,6 @@ namespace DwarfWars
             NetOutgoingMessage message = CreateMessage(command);
             client.SendMessage(message, NetDeliveryMethod.ReliableOrdered);
             client.FlushSendQueue();
-
-
         }
 
         private NetOutgoingMessage CreateMessage(ICommand command)
@@ -162,7 +153,7 @@ namespace DwarfWars
                     message.Write(MoveCommand.Target.ID);
                     message.Write(MoveCommand.MoveString);
                     break;
-                case CommandType.Interact:
+                case CommandType.Placement:
                     break;
             }
             return message;
