@@ -55,27 +55,15 @@ namespace DwarfWars.Library
 
     public class LocationCommand : ICommand
     {
-        public Player Target;
-        public int XPos;
-        public int YPos;
+        Player target;
         public LocationCommand(Player target, int xpos, int ypos, string commandid) : base(CommandType.Location, commandid)
         {
-            Target = target;
-            XPos = xpos;
-            YPos = ypos;
+            this.target = target;
         }
 
         public override void Run()
         {
-            var tempX = (XPos - Target.XPos) / 5;
-            var tempY = (YPos - Target.YPos) / 5;
-            Target.XPos = XPos;
-            Target.YPos = YPos;
-            for (int i = 0; i < 5; i++)
-            {
-                Target.XPos += tempX;
-                Target.YPos += tempY;
-            }
+            
         }
     }
 

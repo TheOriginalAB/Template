@@ -14,3 +14,4 @@ D:\DwarfWars\DwarfWars.Library\obj\Debug\netstandard1.4\DwarfWars.Library.csproj
 D:\DwarfWars\DwarfWars.Library\obj\Debug\netstandard1.4\DwarfWars.Library.AssemblyInfo.cs
 D:\DwarfWars\DwarfWars.Library\obj\Debug\netstandard1.4\DwarfWars.Library.dll
 D:\DwarfWars\DwarfWars.Library\obj\Debug\netstandard1.4\DwarfWars.Library.pdb
+C:\Users\pwd12\Desktop\DwarfWars\DwarfWars.Library\obj\Debug\netstandard1.4\DwarfWars.Library.AssemblyInfoInputs.cache

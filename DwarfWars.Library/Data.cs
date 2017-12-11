@@ -8,15 +8,9 @@ namespace DwarfWars.Library
     {
         Welcome = -1, Connect = 1,
         Goodbye = -2, Disconnect = 2,
-        
+
         Movement = -3, Location = 3,
-
-        Placement = -4, Build = 4,
-        Remove = -5, Destroy = 5,
-        
-        Craft = -6, Create = 6,
-
-        Attack = -7, Hit
+        Interact = -4
     }
 
     public class Player
