@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Lidgren.Network;
 using DwarfWars.Library;
+using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 
 namespace DwarfWars
 {
@@ -40,12 +42,12 @@ namespace DwarfWars
             allPlayers.Add(player);
         }
 
-        public void Movement(string direction)
+        public void Movement(string direction, Camera2D cam)
         {
             var xmovement = direction.Contains("L") ? -5 : direction.Contains("R") ? 5 : 0;
             var ymovement = direction.Contains("U") ? -5 : direction.Contains("D") ? 5 : 0;
             var command = new MovementCommand(player, xmovement, ymovement, direction, ICommand.GenerateRandID());
-
+            cam.Move(new Vector2(xmovement, ymovement));
             Thread thread = new Thread(command.Run);
             thread.Start();
             SendMessage(command);

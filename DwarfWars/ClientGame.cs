@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Threading;
 using DwarfWars.Library;
 using Lidgren.Network;
+using MonoGame.Extended;
 using System;
 
 namespace DwarfWars
@@ -19,6 +20,8 @@ namespace DwarfWars
         Thread readingThread;
         KeyboardState current;
         SpriteFont font;
+        Camera2D cam;
+        Vector2 viewVector;
 
         public ClientGame()
         {
@@ -29,6 +32,7 @@ namespace DwarfWars
             readingThread.Start();
             current = Keyboard.GetState();
             IsMouseVisible = true;
+            
         }
 
         /// <summary>
@@ -53,6 +57,9 @@ namespace DwarfWars
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("File");
+            cam = new Camera2D(GraphicsDevice); 
+            viewVector = new Vector2(client.player.XPos + 25, client.player.YPos + 25);
+            cam.LookAt(viewVector);
             // TODO: use this.Content to load your game content here
         }
 
@@ -75,7 +82,6 @@ namespace DwarfWars
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             current = Keyboard.GetState();
-
             var movestring = String.Empty;
             if (current.IsKeyDown(Keys.Up))
             {
@@ -97,7 +103,7 @@ namespace DwarfWars
             }
             if (movestring != String.Empty)
             {
-                client.Movement(movestring);
+                client.Movement(movestring, cam); 
             }
             // TODO: Add your update logic here
             base.Update(gameTime);
@@ -113,8 +119,9 @@ namespace DwarfWars
 
             Texture2D temp = new Texture2D(GraphicsDevice, 1, 1);
             temp.SetData(new Color[] { Color.White });
+            var transformmatrix = cam.GetViewMatrix();
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
+            spriteBatch.Begin(transformMatrix: transformmatrix);
             foreach (ClientPlayer p in client.allPlayers)
             {
                 Color color = Color.Blue;
@@ -129,6 +136,8 @@ namespace DwarfWars
                 spriteBatch.Draw(temp, new Rectangle(p.XPos, p.YPos, 50, 50), color);
                 spriteBatch.DrawString(font, p.ID.ToString(), new Vector2(p.XPos, p.YPos), Color.Black);
             }
+            spriteBatch.End();
+            spriteBatch.Begin();
             spriteBatch.DrawString(font, client.allPlayers.Count.ToString(), new Vector2(0,0), Color.Black);
             spriteBatch.DrawString(font, "Ping: " + ((int)(client.client.Connections[0].AverageRoundtripTime * 1000)).ToString(), new Vector2(100, 0), Color.Black);
             base.Draw(gameTime);
