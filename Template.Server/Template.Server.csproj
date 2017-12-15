@@ -68,7 +68,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DwarfWars.Library\Template.Library.csproj">
+    <ProjectReference Include="..\Template.Library\Template.Library.csproj">
       <Project>{a8056926-3459-4224-b1fe-e3eaa4d4474e}</Project>
       <Name>Template.Library</Name>
     </ProjectReference>

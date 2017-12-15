@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template", "DwarfWars\Template.csproj", "{18F80BC2-EB94-440C-8995-F7A671A2A640}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template", "Template\Template.csproj", "{18F80BC2-EB94-440C-8995-F7A671A2A640}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template.Server", "DwarfWars.Server\Template.Server.csproj", "{D8AB75BE-2536-4E93-A220-B5ED724AD3D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template.Server", "Template.Server\Template.Server.csproj", "{D8AB75BE-2536-4E93-A220-B5ED724AD3D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template.Library", "DwarfWars.Library\Template.Library.csproj", "{A8056926-3459-4224-B1FE-E3EAA4D4474E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template.Library", "Template.Library\Template.Library.csproj", "{A8056926-3459-4224-B1FE-E3EAA4D4474E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
