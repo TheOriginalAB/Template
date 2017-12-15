@@ -3711,11 +3711,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\pwd12\\Desktop\\DwarfWars\\DwarfWars.Library\\DwarfWars.Library.csproj",
-      "projectName": "DwarfWars.Library",
-      "projectPath": "C:\\Users\\pwd12\\Desktop\\DwarfWars\\DwarfWars.Library\\DwarfWars.Library.csproj",
+      "projectUniqueName": "C:\\Users\\pwd12\\Desktop\\New folder\\DwarfWars\\DwarfWars.Library\\Template.Library.csproj",
+      "projectName": "Template.Library",
+      "projectPath": "C:\\Users\\pwd12\\Desktop\\New folder\\DwarfWars\\DwarfWars.Library\\Template.Library.csproj",
       "packagesPath": "C:\\Users\\pwd12\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pwd12\\Desktop\\DwarfWars\\DwarfWars.Library\\obj\\",
+      "outputPath": "C:\\Users\\pwd12\\Desktop\\New folder\\DwarfWars\\DwarfWars.Library\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\pwd12\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-namespace DwarfWars.Server
+namespace Template.Server
 {
 #if WINDOWS || LINUX
     /// <summary>

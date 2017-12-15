@@ -7,9 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Lidgren.Network;
 using System.Net;
-using DwarfWars.Library;
+using Template.Library;
 
-namespace DwarfWars.Server
+namespace Template.Server
 {
     public class Server
     {

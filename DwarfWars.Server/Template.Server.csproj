@@ -9,8 +9,8 @@
     <ProjectGuid>{D8AB75BE-2536-4E93-A220-B5ED724AD3D3}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DwarfWars.Server</RootNamespace>
-    <AssemblyName>DwarfWars.Server</AssemblyName>
+    <RootNamespace>Template.Server</RootNamespace>
+    <AssemblyName>Template.Server</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -68,9 +68,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DwarfWars.Library\DwarfWars.Library.csproj">
+    <ProjectReference Include="..\DwarfWars.Library\Template.Library.csproj">
       <Project>{a8056926-3459-4224-b1fe-e3eaa4d4474e}</Project>
-      <Name>DwarfWars.Library</Name>
+      <Name>Template.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

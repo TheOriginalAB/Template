@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DwarfWars
+namespace Template
 {
 #if WINDOWS || LINUX
     /// <summary>

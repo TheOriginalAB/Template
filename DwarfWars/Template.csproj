@@ -9,8 +9,8 @@
     <ProjectGuid>{18F80BC2-EB94-440C-8995-F7A671A2A640}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DwarfWars</RootNamespace>
-    <AssemblyName>DwarfWars</AssemblyName>
+    <RootNamespace>Template</RootNamespace>
+    <AssemblyName>Template</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -73,12 +73,14 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.config" />
     <None Include="app.manifest" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DwarfWars.Library\DwarfWars.Library.csproj">
+    <ProjectReference Include="..\DwarfWars.Library\Template.Library.csproj">
       <Project>{a8056926-3459-4224-b1fe-e3eaa4d4474e}</Project>
-      <Name>DwarfWars.Library</Name>
+      <Name>Template.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

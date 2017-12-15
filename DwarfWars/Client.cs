@@ -6,11 +6,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Lidgren.Network;
-using DwarfWars.Library;
+using Template.Library;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
-namespace DwarfWars
+namespace Template
 {
     class Client
     {

@@ -2,11 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
-using DwarfWars.Library;
+using Template.Library;
 using Lidgren.Network;
 using System;
 
-namespace DwarfWars.Server
+namespace Template.Server
 {
     /// <summary>
     /// This is the main type for your game.

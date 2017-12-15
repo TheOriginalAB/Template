@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DwarfWars.Library;
+using Template.Library;
 
-namespace DwarfWars
+namespace Template
 {
     class ClientPlayer : Player
     {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lidgren.Network;
-using DwarfWars.Library;
+using Template.Library;
 
-namespace DwarfWars.Server
+namespace Template.Server
 {
     public class ServerPlayer : Player
     {

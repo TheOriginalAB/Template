@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DwarfWars.Library
+namespace Template.Library
 {
     public abstract class ICommand
     {

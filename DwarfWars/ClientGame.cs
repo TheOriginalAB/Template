@@ -2,12 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
-using DwarfWars.Library;
+using Template.Library;
 using Lidgren.Network;
 using MonoGame.Extended;
 using System;
 
-namespace DwarfWars
+namespace Template
 {
     /// <summary>
     /// This is the main type for your game.

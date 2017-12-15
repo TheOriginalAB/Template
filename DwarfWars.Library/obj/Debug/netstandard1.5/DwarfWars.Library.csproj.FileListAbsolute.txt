@@ -1,8 +1,0 @@
-C:\Users\pwd12\Desktop\DwarfWars\DwarfWars.Library\bin\Debug\netstandard1.5\DwarfWars.Library.deps.json
-C:\Users\pwd12\Desktop\DwarfWars\DwarfWars.Library\bin\Debug\netstandard1.5\DwarfWars.Library.dll
-C:\Users\pwd12\Desktop\DwarfWars\DwarfWars.Library\bin\Debug\netstandard1.5\DwarfWars.Library.pdb
-C:\Users\pwd12\Desktop\DwarfWars\DwarfWars.Library\obj\Debug\netstandard1.5\DwarfWars.Library.csprojResolveAssemblyReference.cache
-C:\Users\pwd12\Desktop\DwarfWars\DwarfWars.Library\obj\Debug\netstandard1.5\DwarfWars.Library.csproj.CoreCompileInputs.cache
-C:\Users\pwd12\Desktop\DwarfWars\DwarfWars.Library\obj\Debug\netstandard1.5\DwarfWars.Library.AssemblyInfo.cs
-C:\Users\pwd12\Desktop\DwarfWars\DwarfWars.Library\obj\Debug\netstandard1.5\DwarfWars.Library.dll
-C:\Users\pwd12\Desktop\DwarfWars\DwarfWars.Library\obj\Debug\netstandard1.5\DwarfWars.Library.pdb

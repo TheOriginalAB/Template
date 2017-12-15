@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DwarfWars.Library
+namespace Template.Library
 {
     public enum CommandType : sbyte
     {
@@ -79,6 +79,11 @@ namespace DwarfWars.Library
 
     public class World
     {
+        ITile[,] Map;
+        public Player Creator { get; private set; }
+        public World()
+        {
 
+        }
     }
 }
