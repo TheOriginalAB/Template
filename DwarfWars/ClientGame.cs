@@ -119,9 +119,8 @@ namespace DwarfWars
 
             Texture2D temp = new Texture2D(GraphicsDevice, 1, 1);
             temp.SetData(new Color[] { Color.White });
-            var transformmatrix = cam.GetViewMatrix();
             // TODO: Add your drawing code here
-            spriteBatch.Begin(transformMatrix: transformmatrix);
+            spriteBatch.Begin(transformMatrix: cam.GetViewMatrix());
             foreach (ClientPlayer p in client.allPlayers)
             {
                 Color color = Color.Blue;

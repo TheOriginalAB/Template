@@ -13,6 +13,25 @@ namespace DwarfWars.Library
         Interact = -4
     }
 
+    public enum TileType : byte
+    {
+        Air = 0,
+        Stone = 1,
+        Barrier = 2,
+        Dirt = 3,
+
+        CoalOre = 4,
+        TinOre = 5,
+        CopperOre = 6,
+        IronOre = 7,
+        GoldOre = 8,
+        DiamondOre = 9,
+
+        WorkBench = 10,
+        Refinery = 11
+
+    }
+
     public class Player
     {
         private readonly object Lock = new object();
@@ -56,5 +75,10 @@ namespace DwarfWars.Library
             }
             return output;
         }
+    }
+
+    public class World
+    {
+
     }
 }
